@@ -8,8 +8,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
-  View,
+  TouchableOpacity, useColorScheme, View
 } from 'react-native';
 
 const SettingsScreen = () => {
@@ -18,6 +17,8 @@ const SettingsScreen = () => {
   const [age, setAge] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  const isDark = useColorScheme() === 'dark';
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -80,47 +81,48 @@ const SettingsScreen = () => {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { backgroundColor: isDark ? '#181C1B' : '#f5f5f5' }]}>
       <Stack.Screen
         options={{
           title: 'Settings',
-          headerStyle: { backgroundColor: '#fff' },
-          headerTitleStyle: { fontSize: 20, fontWeight: '600' },
-          headerTintColor: '#333',
+          headerStyle: { backgroundColor: isDark ? '#181C1B' : '#fff' },
+          headerTitleStyle: { color: isDark ? '#fff' : '#000' },
+          headerTintColor: isDark ? '#fff' : '#000',  
+          headerShadowVisible: false,
         }}
       />
 
       {/* Personal Info */}
-      <Text style={styles.sectionTitle}>My Information</Text>
+      <Text style={[styles.sectionTitle, { color: isDark ? '#e5e5e5' : '#333'}]}>My Information</Text>
       <View style={styles.card}>
         <View style={styles.field}>
-          <Text style={styles.label}>Name</Text>
+          <Text style={[styles.label, { color: isDark ? '#737373' : '#555' }]}>Name</Text>
           <TextInput
             value={name}
             onChangeText={setName}
-            style={styles.input}
+            style={[styles.input, { backgroundColor: isDark ? '#2e3332' : '#f8f8f8', borderColor: isDark ? '#3e4744' : '#D1D5DB', color: isDark ? '#e5e5e5' : '#333' }]}
             placeholderTextColor={'#999'}
             placeholder="Enter your name"
           />
         </View>
 
         <View style={styles.field}>
-          <Text style={styles.label}>Country</Text>
+          <Text style={[styles.label, { color: isDark ? '#737373' : '#555' }]}>Country</Text>
           <TextInput
             value={country}
             onChangeText={setCountry}
-            style={styles.input}
+            style={[styles.input, { backgroundColor: isDark ? '#2e3332' : '#f8f8f8', borderColor: isDark ? '#3e4744' : '#D1D5DB', color: isDark ? '#e5e5e5' : '#333' }]}
             placeholderTextColor={'#999'}
             placeholder="Enter your country"
           />
         </View>
 
         <View style={styles.field}>
-          <Text style={styles.label}>Age</Text>
+          <Text style={[styles.label, { color: isDark ? '#737373' : '#555' }]}>Age</Text>
           <TextInput
             value={age !== null ? String(age) : ''}
             onChangeText={(t) => setAge(t ? parseInt(t, 10) : null)}
-            style={styles.input}
+            style={[styles.input, { backgroundColor: isDark ? '#2e3332' : '#f8f8f8', borderColor: isDark ? '#3e4744' : '#D1D5DB', color: isDark ? '#e5e5e5' : '#333' }]}
             placeholderTextColor={'#999'}
             placeholder="Enter your age"
             keyboardType="numeric"
@@ -128,7 +130,7 @@ const SettingsScreen = () => {
         </View>
 
         <TouchableOpacity
-          style={styles.linkButton}
+          style={[styles.linkButton, { backgroundColor: isDark ? '#ff8904' : '#F4A261' }]}
           onPress={() => updateInformation(name, country, age)}
         >
           <Text style={styles.linkText}>Update your information</Text>
@@ -180,7 +182,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#333',
     marginHorizontal: 16,
     marginTop: 24,
     marginBottom: 12,
@@ -204,7 +205,6 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#555',
     marginBottom: 6,
   },
   input: {
@@ -236,11 +236,11 @@ const styles = StyleSheet.create({
     bottom: -300,
   },
   linkButton: {
-    backgroundColor: '#F4A261',
     borderRadius: 10,
     paddingVertical: 14,
     alignItems: 'center',
-    width: '45%'
+    marginTop: 24
+    // width: '45%'
   },
   linkButtonDestructive: {
     backgroundColor: '#F44336',

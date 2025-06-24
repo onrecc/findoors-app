@@ -399,6 +399,26 @@ const FeedScreen = () => {
               style={styles.modalButton}
               onPress={() => {
                 setModalVisible(false);
+                Alert.alert(
+                  'Report Content',
+                  'Are you sure you want to report this content? This action cannot be undone.',
+                  [
+                    { text: 'Cancel', style: 'cancel' },
+                    { text: 'Report', style: 'destructive', onPress: () => reportItem(selectedItem.id) },
+                  ]
+                );
+              }}
+            >
+              <MaterialIcons name="report" size={20} color={isDark ? '#ff9800' : '#f57c00'} />
+              <Text style={[styles.modalButtonText, { color: isDark ? '#ff9800' : '#f57c00' }]}>
+                Report
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => {
+                setModalVisible(false);
                 if (isUserBlocked) {
                   Alert.alert(
                     'Unblock User',
@@ -441,31 +461,11 @@ const FeedScreen = () => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.modalButton}
-              onPress={() => {
-                setModalVisible(false);
-                Alert.alert(
-                  'Report Content',
-                  'Are you sure you want to report this content? This action cannot be undone.',
-                  [
-                    { text: 'Cancel', style: 'cancel' },
-                    { text: 'Report', style: 'destructive', onPress: () => reportItem(selectedItem.id) },
-                  ]
-                );
-              }}
-            >
-              <MaterialIcons name="report" size={20} color={isDark ? '#ff9800' : '#f57c00'} />
-              <Text style={[styles.modalButtonText, { color: isDark ? '#ff9800' : '#f57c00' }]}>
-                Report
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.modalButton, styles.cancelButton]}
+              style={[styles.modalButton, styles.cancelButton, { borderTopColor: isDark ? '#444' : '#eee' }]}
               onPress={() => setModalVisible(false)}
             >
-              <MaterialIcons name="close" size={20} color={isDark ? '#888' : '#666'} />
-              <Text style={[styles.modalButtonText, { color: isDark ? '#888' : '#666' }]}>
+              <MaterialIcons name="close" size={20} color={isDark ? '#d4d4d4' : '#666'} />
+              <Text style={[styles.modalButtonText, { color: isDark ? '#d4d4d4' : '#666' }]}>
                 Cancel
               </Text>
             </TouchableOpacity>
@@ -477,26 +477,26 @@ const FeedScreen = () => {
 
   if (loading) {
     return (
-      <View style={[styles.container, styles.centered, { backgroundColor: isDark ? '#121212' : '#fff' }]}>
+      <View style={[styles.container, styles.centered, { backgroundColor: isDark ? '#181C1B' : '#fff' }]}>
         <Stack.Screen
           options={{
             title: 'Feed',
-            headerStyle: { backgroundColor: isDark ? '#121212' : '#fff' },
+            headerStyle: { backgroundColor: isDark ? '#181C1B' : '#fff' },
             headerTitleStyle: { color: isDark ? '#fff' : '#000' },
             headerTintColor: isDark ? '#fff' : '#000',
           }}
         />
-        <ActivityIndicator size="large" color={isDark ? '#fff' : '#000'} />
-        <Text style={[styles.loadingText, { color: isDark ? '#fff' : '#000' }]}>
+        <ActivityIndicator size="small" color={isDark ? '#c3ccc8' : '#000'} />
+        {/* <Text style={[styles.loadingText, { color: isDark ? '#c3ccc8' : '#000' }]}>
           Loading feed...
-        </Text>
+        </Text> */}
       </View>
     );
   }
 
   if (error) {
     return (
-      <View style={[styles.container, styles.centered, { backgroundColor: isDark ? '#121212' : '#fff' }]}>
+      <View style={[styles.container, styles.centered, { backgroundColor: isDark ? '#181C1B' : '#fff' }]}>
         <Text style={[styles.errorText, { color: isDark ? '#ff6b6b' : 'red' }]}>
           {error}
         </Text>
@@ -517,17 +517,18 @@ const FeedScreen = () => {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: isDark ? '#121212' : '#f5f5f5' }]}>
+    <View style={[styles.container, { backgroundColor: isDark ? '#181C1B' : '#f5f5f5' }]}>
       <Stack.Screen
         options={{
           title: 'Feed',
-          headerStyle: { backgroundColor: isDark ? '#121212' : '#fff' },
+          headerStyle: { backgroundColor: isDark ? '#181C1B' : '#fff' },
           headerTitleStyle: { color: isDark ? '#fff' : '#000' },
           headerTintColor: isDark ? '#fff' : '#000',
         }}
       />
       
       <FlatList
+        style={{ marginBottom: 85 }}
         data={feedItems}
         renderItem={renderFeedItem}
         keyExtractor={(item) => item.id}
@@ -535,7 +536,7 @@ const FeedScreen = () => {
           <RefreshControl 
             refreshing={refreshing} 
             onRefresh={onRefresh}
-            tintColor={isDark ? '#fff' : '#000'}
+            tintColor={isDark ? '#e5e5e5' : '#262626'}
           />
         }
         ListEmptyComponent={
@@ -565,13 +566,13 @@ const FeedItemComponent = ({
 }) => {
   return (
     <Pressable 
-      style={[styles.feedItem, { backgroundColor: isDark ? '#1e1e1e' : '#fff' }]}
+      style={[styles.feedItem, { backgroundColor: isDark ? '#2e3332' : '#fff' }]}
       onPress={() => router.push(`/passport/checkins/${item.id}`)}
     >
       <View style={styles.feedHeader}>
         <View style={styles.userInfo}>
-          <View style={[styles.avatar, { backgroundColor: isDark ? '#333' : '#ddd' }]}>
-            <Text style={[styles.avatarText, { color: isDark ? '#fff' : '#666' }]}>
+          <View style={[styles.avatar, { backgroundColor: isDark ? '#9eaaa5' : '#ddd' }]}>
+            <Text style={[styles.avatarText, { color: isDark ? '#4a5753' : '#666' }]}>
               {item.posterName.charAt(0).toUpperCase()}
             </Text>
           </View>
@@ -579,7 +580,7 @@ const FeedItemComponent = ({
             <Text style={[styles.userName, { color: isDark ? '#fff' : '#000' }]}>
               {item.posterName}
             </Text>
-            <Text style={[styles.timeAgo, { color: isDark ? '#888' : '#666' }]}>
+            <Text style={[styles.timeAgo, { color: isDark ? '#9eaaa5' : '#666' }]}>
               {item.timeAgo}
             </Text>
           </View>
@@ -592,13 +593,13 @@ const FeedItemComponent = ({
           <MaterialIcons 
             name="more-vert" 
             size={20} 
-            color={isDark ? '#888' : '#666'} 
+            color={isDark ? '#9eaaa5' : '#666'} 
           />
         </TouchableOpacity>
       </View>
 
       {item.caption && (
-        <Text style={[styles.caption, { color: isDark ? '#e5e5e5' : '#333' }]}>
+        <Text style={[styles.caption, { color: isDark ? '#e1e6e4' : '#333' }]}>
           {item.caption}
         </Text>
       )}
@@ -609,12 +610,12 @@ const FeedItemComponent = ({
 
       <View style={styles.feedFooter}>
         {item.tagged.length > 0 && (
-          <Text style={[styles.taggedText, { color: isDark ? '#888' : '#666' }]}>
+          <Text style={[styles.taggedText, { color: isDark ? '#9eaaa5' : '#666' }]}>
             With {item.tagged.join(', ')}
           </Text>
         )}
         {item.poiTitle && (
-          <Text style={[styles.locationText, { color: isDark ? '#888' : '#666' }]}>
+          <Text style={[styles.locationText, { color: isDark ? '#9eaaa5' : '#666' }]}>
             📍 {item.poiTitle}
           </Text>
         )}
@@ -748,7 +749,8 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     borderRadius: 12,
-    padding: 20,
+    padding: 10,
+    paddingTop: 20,
     minWidth: 280,
     maxWidth: 320,
     shadowColor: '#000',
@@ -779,7 +781,6 @@ const styles = StyleSheet.create({
   cancelButton: {
     marginTop: 8,
     borderTopWidth: 1,
-    borderTopColor: '#eee',
     paddingTop: 16,
   },
 });

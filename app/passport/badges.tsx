@@ -64,11 +64,13 @@ export default function StampsScreen() {
           headerStyle: { backgroundColor: '#FAF3E0' },
           headerTitleStyle: { color: '#5C4B51', fontSize: 24, fontWeight: 'bold' },
           headerTintColor: '#5C4B51',
+          headerShadowVisible: false,
         } : {
           title: 'My Passport Stamps',
           headerStyle: { backgroundColor: '#23212b' },
           headerTitleStyle: { color: '#f5e9d7', fontSize: 24, fontWeight: 'bold' },
           headerTintColor: '#f5e9d7',
+          headerShadowVisible: false,
         }}
       />
 

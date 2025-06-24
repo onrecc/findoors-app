@@ -2,7 +2,7 @@ import * as Location from 'expo-location';
 import * as Notifications from 'expo-notifications';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const pastelGreen = '#E6F5DE';
@@ -10,6 +10,7 @@ const mainText = '#5C7C6E';
 const accent = '#F4A261';
 
 const PermissionsScreen = () => {
+  const isDark = useColorScheme() === 'dark';
   const [locationStatus, setLocationStatus] = useState('');
   const [notifStatus, setNotifStatus] = useState('');
 
@@ -27,33 +28,34 @@ const PermissionsScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>🔐 Permissions</Text>
-      <Text style={styles.subtext}>
+    <SafeAreaView style={[styles.container, isDark && { backgroundColor: '#181c1b' }]}> 
+      <Text style={[styles.title, isDark && { color: '#E6F5DE' }]}>🔐 Permissions</Text>
+      <Text style={[styles.subtext, isDark && { color: '#B4CBA5' }]}>
         We ask for a few things so the app can feel like your summer neighborhood.
       </Text>
 
-      <TouchableOpacity style={styles.card} onPress={requestLocation}>
+      <TouchableOpacity style={[styles.card, isDark && { backgroundColor: '#232825' }]} onPress={requestLocation}>
         <Text style={styles.emoji}>📍</Text>
         <View>
-          <Text style={styles.cardTitle}>Location Access</Text>
-          <Text style={styles.cardText}>To show you and your friends on the map</Text>
+          <Text style={[styles.cardTitle, isDark && { color: '#E6F5DE' }]}>Location Access</Text>
+          <Text style={[styles.cardText, isDark && { color: '#B4CBA5' }]}>To show you and your friends on the map</Text>
         </View>
-        <Text style={styles.status}>{locationStatus}</Text>
+        <Text style={[styles.status, isDark && { color: '#B4CBA5' }]}>{locationStatus}</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.card} onPress={requestNotifications}>
+      <TouchableOpacity style={[styles.card, isDark && { backgroundColor: '#232825' }]} onPress={requestNotifications}>
         <Text style={styles.emoji}>🔔</Text>
         <View>
-          <Text style={styles.cardTitle}>Notifications</Text>
-          <Text style={styles.cardText}>To let you know when events happen or friends are nearby</Text>
+          <Text style={[styles.cardTitle, isDark && { color: '#E6F5DE' }]}>Notifications</Text>
+          <Text style={[styles.cardText, isDark && { color: '#B4CBA5' }]}>To let you know when events happen or friends are nearby</Text>
         </View>
-        <Text style={styles.status}>{notifStatus}</Text>
+        <Text style={[styles.status, isDark && { color: '#B4CBA5' }]}>{notifStatus}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.continueBtn}
+        style={[styles.continueBtn, isDark && { backgroundColor: accent }]}
         onPress={() => router.push('/welcome/intro')}
+        activeOpacity={0.87}
       >
         <Text style={styles.continueText}>Continue →</Text>
       </TouchableOpacity>

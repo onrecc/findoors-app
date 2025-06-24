@@ -1,13 +1,14 @@
 import { supabase } from '@/lib/supabase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  useColorScheme,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -28,6 +29,8 @@ interface Resident {
 }
 
 export default function FellowsScreen() {
+  const router = useRouter();
+  const isDark = useColorScheme() === 'dark';
   const [userUid, setUserUid] = useState<string | null>(null);
   const [userHouse, setUserHouse] = useState<string | null>(null);
   const [hideMe, setHideMe] = useState(false);
@@ -121,18 +124,22 @@ export default function FellowsScreen() {
   };
 
   const renderResident = (r: Resident, isYou = false) => (
-    <View style={[styles.card, isYou && styles.meCard]}>
-      <Text style={styles.name}>
+    <View style={[
+      styles.card,
+      isYou && styles.meCard,
+      isDark && { backgroundColor: '#232825', borderColor: isYou ? accent : '#232825' },
+    ]}>
+      <Text style={[styles.name, isDark && { color: '#E6F5DE' }]}>
         {r.name} {isYou ? '(You)' : ''}
       </Text>
-      <Text style={styles.meta}>
+      <Text style={[styles.meta, isDark && { color: '#B4CBA5' }]}>
         {new Date(r.arrival).toLocaleDateString()} →{' '}
         {new Date(r.departure).toLocaleDateString()}
       </Text>
       {r.public_profile && !isYou && (
         <>
-          {r.country && <Text style={styles.meta}>🌍 {r.country}</Text>}
-          {r.age && <Text style={styles.meta}>🎂 Age {r.age}</Text>}
+          {r.country && <Text style={[styles.meta, isDark && { color: '#B4CBA5' }]}>🌍 {r.country}</Text>}
+          {r.age && <Text style={[styles.meta, isDark && { color: '#B4CBA5' }]}>🎂 Age {r.age}</Text>}
         </>
       )}
     </View>
@@ -142,13 +149,18 @@ export default function FellowsScreen() {
     loadUserData();
   }, []);
 
+  const handleNext = async () => {
+    // await AsyncStorage.setItem('@findoors:welcome_done', 'true');
+    router.push('/welcome/permissions');
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Fellow Residents</Text>
+    <SafeAreaView style={[styles.container, isDark && { backgroundColor: '#181c1b' }]}> 
+      <Text style={[styles.header, isDark && { color: '#E6F5DE' }]}>Fellow Residents</Text>
 
       {yourHousemates.length > 0 && (
         <>
-          <Text style={styles.sectionHeader}>🏠 Your Housemates</Text>
+          <Text style={[styles.sectionHeader, isDark && { color: '#E6F5DE' }]}>🏠 Your Housemates</Text>
           <FlatList
             data={yourHousemates}
             keyExtractor={(item) => item.uid}
@@ -159,7 +171,7 @@ export default function FellowsScreen() {
 
       {others.length > 0 && (
         <>
-          <Text style={styles.sectionHeader}>🌐 Other Residents</Text>
+          <Text style={[styles.sectionHeader, isDark && { color: '#E6F5DE' }]}>🌐 Other Residents</Text>
           <FlatList
             data={others}
             keyExtractor={(item) => item.uid}
@@ -179,11 +191,9 @@ export default function FellowsScreen() {
         <Switch value={showProfile} onValueChange={togglePublicProfile} />
       </View>
       */}
-      <Link href="/welcome/permissions" asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Continue →</Text>
-        </TouchableOpacity>
-      </Link>
+      <TouchableOpacity style={[styles.button, isDark && { backgroundColor: accent }]} onPress={handleNext}> 
+        <Text style={styles.buttonText}>Continue →</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

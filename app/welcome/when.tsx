@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
 
 const pastelGreen = '#E6F5DE';
 const mainText = '#5C7C6E';
@@ -41,6 +41,7 @@ export default function DateScreen() {
   const [slots, setSlots] = useState<DateSlot[]>([]);
   const [arrivalDate, setArrivalDate] = useState<Date | null>(null);
   const [departureDate, setDepartureDate] = useState<Date | null>(null);
+  const isDark = useColorScheme() === 'dark';
 
   // Load saved dates from AsyncStorage
   useEffect(() => {
@@ -91,13 +92,13 @@ export default function DateScreen() {
     .map(s => s.date);
 
   return (
-    <View style={styles.dateContainer}>
+    <View style={[styles.dateContainer, isDark && { backgroundColor: '#181c1b' }]}> 
       <TouchableOpacity onPress={() => router.back()} style={styles.backLink}>
-        <Text style={styles.backLinkText}>← Back</Text>
+        <Text style={[styles.backLinkText, isDark && { color: '#E6F5DE' }]}>← Back</Text>
       </TouchableOpacity>
 
       <View style={styles.dateDateContainer}>
-        <Text style={styles.dateTitle}>Select arrival date</Text>
+        <Text style={[styles.dateTitle, isDark && { color: '#E6F5DE' }]}>Select arrival date</Text>
         <ScrollView
           horizontal
           contentContainerStyle={styles.dateList}
@@ -115,14 +116,14 @@ export default function DateScreen() {
                     styles.dateCard,
                     {
                       borderColor: isSel ? accent : 'transparent',
-                      backgroundColor: isSel ? accent : '#FFF',
+                      backgroundColor: isSel ? accent : (isDark ? '#232825' : '#FFF'),
                     },
                   ]}
                 >
                   <Text
                     style={[
                       styles.dateText,
-                      { color: isSel ? '#FFF' : mainText },
+                      { color: isSel ? '#FFF' : (isDark ? '#E6F5DE' : mainText) },
                     ]}
                   >
                     {date.toLocaleDateString('en-US', {
@@ -140,9 +141,7 @@ export default function DateScreen() {
       <View style={styles.dateDateContainer}>
         {arrivalDate && (
           <>
-            <Text style={[styles.dateTitle, { marginTop: 24 }]}>
-              Select departure date
-            </Text>
+            <Text style={[styles.dateTitle, { marginTop: 24 }, isDark && { color: '#E6F5DE' }]}>Select departure date</Text>
             <ScrollView
               horizontal
               contentContainerStyle={styles.dateList}
@@ -159,14 +158,14 @@ export default function DateScreen() {
                       styles.dateCard,
                       {
                         borderColor: isSel ? accent : 'transparent',
-                        backgroundColor: isSel ? accent : '#FFF',
+                        backgroundColor: isSel ? accent : (isDark ? '#232825' : '#FFF'),
                       },
                     ]}
                   >
                     <Text
                       style={[
                         styles.dateText,
-                        { color: isSel ? '#FFF' : mainText },
+                        { color: isSel ? '#FFF' : (isDark ? '#E6F5DE' : mainText) },
                       ]}
                     >
                       {date.toLocaleDateString('en-US', {
@@ -184,8 +183,7 @@ export default function DateScreen() {
       </View>
 
       <View style={styles.statsContainer}>
-        <Text style={styles.statsText}>
-          Wow, you will be coding at least{' '}
+        <Text style={[styles.statsText, isDark && { color: '#E6F5DE' }]}>Wow, you will be coding at least{' '}
           <Text style={styles.statsNumber}>
             {40 *
               (departureDate && arrivalDate

@@ -7,7 +7,8 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
+  useColorScheme
 } from 'react-native';
 
 
@@ -22,6 +23,8 @@ function useSavedLocations() {
   const [pois, setPois] = useState<POI[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const isDark = useColorScheme() === 'dark';
 
   useEffect(() => {
     let active = true;
@@ -99,11 +102,17 @@ function useSavedLocations() {
 }
 
 export default function SavedLocationsScreen() {
+  const isDark = useColorScheme() === 'dark';
   const { pois, loading, error } = useSavedLocations();
 
   return (
-    <ScrollView style={styles.container}>
-      <Stack.Screen options={{ title: 'Saved Locations' }} />
+    <ScrollView style={[styles.container, { backgroundColor: isDark ? '#181C1B' : '#f5f5f5' }]}>
+      <Stack.Screen options={{
+        title: 'Saved Locations',
+        headerStyle: { backgroundColor: isDark ? '#181C1B' : '#f5f5f5' },
+          headerTitleStyle: { color: isDark ? '#fff' : '#000' },
+          headerShadowVisible: false,
+      }} />
 
       {loading && <ActivityIndicator size="large" color="#888" />}
       {error && <Text style={styles.error}>{error}</Text>}
@@ -116,9 +125,9 @@ export default function SavedLocationsScreen() {
         pois.map((poi) => (
           <View
             key={poi.id}
-            style={styles.card}
+            style={[styles.card, { backgroundColor: isDark ? '#2e3332' : '#fff' }]}
           >
-            <Text style={styles.title}>{poi.title}</Text>
+            <Text style={[styles.title, { color: isDark ? '#fff' : '#333' }]}>{poi.title}</Text>
             {poi.image_url && (
               <Image
                 source={{ uri: poi.image_url }}
@@ -160,7 +169,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: '#333',
     marginBottom: 8,
   },
   image: {

@@ -17,8 +17,9 @@ const AddFriendsScreen = () => {
     navigation.setOptions({
       headerTitle: 'Add Friends',
       headerStyle: {
-        backgroundColor: isDark ? '#121212' : '#f5f5f5',
+        backgroundColor: isDark ? '#181C1B' : '#f5f5f5',
       },
+      headerShadowVisible: false,
       headerTintColor: isDark ? '#ffffff' : '#000000',
       headerTitleStyle: {
         fontWeight: 'bold',
@@ -108,15 +109,15 @@ const AddFriendsScreen = () => {
   };
 
   return (
-    <View style={[styles.container, {backgroundColor: isDark ? '#121212' : '#f5f5f5'}]}>
+    <View style={[styles.container, {backgroundColor: isDark ? '#181C1B' : '#f5f5f5'}]}>
       <View style={styles.yourCodeContainer}>
         <Text style={[styles.yourCodeLabel, {color: isDark ? '#e5e5e5' :'#333'}]}>Your friend code:</Text>
-        <Pressable style={[styles.innerContainer, {borderColor: isDark ? '#262626' : '#ccc', backgroundColor: isDark ? '#000000' : '#ffffff'}]} onPress={() => {Clipboard.setString(myFriendCode); Alert.alert('Copied!')}}>
+        <Pressable style={[styles.innerContainer, {borderColor: isDark ? '#343b39' : '#ccc', backgroundColor: isDark ? '#00000040' : '#ffffff'}]} onPress={() => {Clipboard.setString(myFriendCode); Alert.alert('Copied!')}}>
           <QRCode
             value={myFriendCode as string}
             size={170} 
-            color={myFriendCode === "Loading..." ? isDark ? "#ffffff" : '#000000' : isDark ? '#f5f5f5' : "#262626"} 
-            backgroundColor={isDark ? "#000000" : "#ffffff"}
+            color={myFriendCode === "Loading..." ? isDark ? "transparent" : '#000000' : isDark ? '#f6f7f7' : "#262626"} 
+            backgroundColor={isDark ? "transparent" : "#ffffff"}
           />
           <Text style={[styles.myCode, {color: isDark ? '#ff8904' : '#f54900'}]}>{myFriendCode}</Text>
         </Pressable>
@@ -127,10 +128,10 @@ const AddFriendsScreen = () => {
         /> */}
       </View>
       
-      <Text style={styles.label}>Enter Friend Code</Text>
+      <Text style={[styles.label, { color: isDark ? '#798883' : '' }]}>Enter Friend Code</Text>
       <View style={[styles.codeInputContainer, {borderColor: isDark ? '#262626' : '#ccc',}]}>
         <TextInput
-          style={[styles.codeInput, { letterSpacing: 12, textAlign: 'center', backgroundColor: isDark ? '#000' : '#fff', color: isDark ? '#fafafa' : '#333', borderColor: isDark ? '#444' : '#ccc' }]}
+          style={[styles.codeInput, { letterSpacing: 12, textAlign: 'center', backgroundColor: isDark ? '#00000050' : '#fff', color: isDark ? '#fafafa' : '#333', borderColor: isDark ? '#44444470' : '#ccc' }]}
           value={friendId}
           onChangeText={setFriendId}
           maxLength={6}

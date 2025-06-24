@@ -14,6 +14,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  useColorScheme,
   View,
 } from 'react-native';
 import SelectFriendsModal from './selectFriendsModal';
@@ -60,6 +61,8 @@ const ShareLocationModal = forwardRef<ShareLocationModalMethods, Props>(
     const [duration, setDuration] = useState<number | 'until_off'>(1);
     const [description, setDescription] = useState<string>('');
     const [friendModalVisible, setFriendModalVisible] = useState(false);
+
+    const isDark = useColorScheme() === 'dark';
 
     // Fetch all friends once on mount
     useEffect(() => {
@@ -115,13 +118,14 @@ const ShareLocationModal = forwardRef<ShareLocationModalMethods, Props>(
       onSelect: (val: T) => void
     ) => (
       <View style={styles.group}>
-        <Text style={styles.groupLabel}>{label}</Text>
+        <Text style={[styles.groupLabel, { color: isDark ? '#d4d4d4' : '#333' }]}>{label}</Text>
         <View style={styles.optionsRow}>
           {options.map((opt) => (
             <Pressable
               key={String(opt.value)}
               style={[
                 styles.optionButton,
+                { borderColor: isDark ? '#444' : '#ccc', backgroundColor: isDark ? '#262626' : '#f8f8f8' },
                 selected === opt.value && styles.optionButtonSelected,
               ]}
               onPress={() => onSelect(opt.value as any)}
@@ -129,6 +133,7 @@ const ShareLocationModal = forwardRef<ShareLocationModalMethods, Props>(
               <Text
                 style={[
                   styles.optionText,
+                  { color: isDark ? '#a1a1a1' : '#333' },
                   selected === opt.value && styles.optionTextSelected,
                 ]}
               >
@@ -147,8 +152,8 @@ const ShareLocationModal = forwardRef<ShareLocationModalMethods, Props>(
           index={0}
           snapPoints={snapPoints}
           enablePanDownToClose
-          backgroundStyle={styles.background}
-          handleIndicatorStyle={styles.handle}
+          backgroundStyle={[styles.background, { backgroundColor: isDark ? '#1e1e1e' : '#fff' }]}
+          handleIndicatorStyle={[styles.handle, { backgroundColor: isDark ? '#444' : '#ccc' }]}
           onDismiss={onClose}
           style={styles.sheet}
         >
@@ -157,7 +162,7 @@ const ShareLocationModal = forwardRef<ShareLocationModalMethods, Props>(
             keyboardShouldPersistTaps="handled"
           >
             <View style={styles.headerRow}>
-              <Text style={styles.header}>Share Your Location</Text>
+              <Text style={[styles.header, { color: isDark ? '#f5f5f5' : '#333' }]}>Share Your Location</Text>
               <Pressable
                 onPress={() => Keyboard.dismiss()}
                 style={styles.closeKeyboard}
@@ -217,11 +222,11 @@ const ShareLocationModal = forwardRef<ShareLocationModalMethods, Props>(
             )}
 
             <View style={styles.group}>
-              <Text style={styles.groupLabel}>
+              <Text style={[styles.groupLabel, { color: isDark ? '#d4d4d4' : '#333' }]}>
                 Note <Text style={{ fontWeight: '300', fontSize: 12 }}>(optional)</Text>
               </Text>
               <TextInput
-                style={styles.textInput}
+                style={[styles.textInput, { backgroundColor: isDark ? '#262626' : '#f8f8f8', color: isDark ? '#e5e5e5' : '#333', borderColor: isDark ? '#444' : '#ccc' }]}
                 placeholder="Where or why are you going..."
                 value={description}
                 onChangeText={setDescription}
@@ -229,7 +234,7 @@ const ShareLocationModal = forwardRef<ShareLocationModalMethods, Props>(
               />
             </View>
 
-            <Pressable style={styles.submitButton} onPress={handleShare}>
+            <Pressable style={[styles.submitButton, { backgroundColor: '#f54900' }]} onPress={handleShare}>
               <Text style={styles.submitText}>Share Location</Text>
             </Pressable>
           </BottomSheetScrollView>
@@ -261,7 +266,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   background: {
-    backgroundColor: '#fff',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
@@ -283,24 +287,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  header: { fontSize: 20, fontWeight: '700', color: '#333' },
+  header: { fontSize: 20, fontWeight: '700' },
   closeKeyboard: { paddingHorizontal: 8, paddingVertical: 4 },
   closeText: { fontSize: 14, color: '#007AFF', fontWeight: '500' },
   group: { marginVertical: 8 },
-  groupLabel: { fontSize: 16, fontWeight: '600', marginBottom: 8, color: '#333' },
+  groupLabel: { fontSize: 16, fontWeight: '600', marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' },
   optionsRow: { flexDirection: 'row', flexWrap: 'wrap' },
   optionButton: {
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#ccc',
+    // borderColor: '#ccc',
     marginRight: 8,
     marginBottom: 8,
   },
   optionButtonSelected: {
-    backgroundColor: '#007AFF', 
-    borderColor: '#007AFF',
+    backgroundColor: '#ff8904', 
+    borderColor: '#ff8904',
   },
   optionText: { fontSize: 14, color: '#333' }, 
   optionTextSelected: { color: '#fff', fontWeight: '600' },
@@ -325,7 +329,6 @@ const styles = StyleSheet.create({
   },
 
   submitButton: {
-    backgroundColor: '#007AFF',
     paddingVertical: 16,
     borderRadius: 8,
     alignItems: 'center',

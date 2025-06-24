@@ -61,11 +61,11 @@ const MapPickerModal = forwardRef<BottomSheetModal, MapPickerModalProps>(({ init
       index={0}
       snapPoints={snapPoints}
       enablePanDownToClose
-      backgroundStyle={isDark ? [styles.modalBackground, { backgroundColor: '#262626' }] : styles.modalBackground}
+      backgroundStyle={isDark ? [styles.modalBackground, { backgroundColor: '#2e3332' }] : styles.modalBackground}
       handleIndicatorStyle={isDark ? [styles.handle, { backgroundColor: '#444' }] : styles.handle}
       onDismiss={onClose}
     >
-      <BottomSheetView style={[styles.mapContainer, isDark && { backgroundColor: '#262626' }]}> 
+      <BottomSheetView style={[styles.mapContainer, isDark && { backgroundColor: '#2e3332' }]}> 
         <MapboxGL.MapView style={styles.map} onPress={handleMapPress}>
           <MapboxGL.Camera zoomLevel={14} centerCoordinate={[marker.lon, marker.lat]} />
           <MapboxGL.ShapeSource
@@ -257,10 +257,10 @@ const CreateEventPage = () => {
 
   return (
     <BottomSheetModalProvider>
-      <SafeAreaView style={[styles.safeArea, { backgroundColor: isDark ? '#171717' : '#F7F5F2' }]}>
+      <SafeAreaView style={[styles.safeArea, { backgroundColor: isDark ? '#181C1B' : '#F7F5F2' }]}>
         <Stack.Screen options={{
           title: 'Create New Event',
-          headerStyle: { backgroundColor: isDark ? '#171717' : '#f5f5f5' },
+          headerStyle: { backgroundColor: isDark ? '#181C1B' : '#f5f5f5' },
           headerTitleStyle: { color: isDark ? '#fff' : '#000' },
           // headerTintColor: isDark ? '#fff' : '#000',
           headerShadowVisible: false,
@@ -274,7 +274,7 @@ const CreateEventPage = () => {
             <View style={styles.inputGroup}>
               <Text style={[styles.label, { color: isDark ? '#a1a1a1' : '#555' }]}>Event Name</Text>
               <TextInput
-                style={[styles.input, { backgroundColor: isDark ? '#262626' : '#FAFAFA', borderColor: isDark ? '#525252' : '#DDD', color: isDark ? '#e5e5e5' : '#333' }]}
+                style={[styles.input, { backgroundColor: isDark ? '#2e3332' : '#FAFAFA', borderColor: isDark ? '#525252' : '#DDD', color: isDark ? '#e5e5e5' : '#333' }]}
                 value={eventName}
                 onChangeText={setEventName}
                 placeholder="e.g. Sunday Brunch"
@@ -286,7 +286,7 @@ const CreateEventPage = () => {
             <View style={styles.inputGroup}>
               <Text style={[styles.label, { color: isDark ? '#a1a1a1' : '#555' }]}>Start</Text>
               <Pressable
-                style={[styles.input, { backgroundColor: isDark ? '#262626' : '#FAFAFA', borderColor: isDark ? '#525252' : '#DDD' }]}
+                style={[styles.input, { backgroundColor: isDark ? '#2e3332' : '#FAFAFA', borderColor: isDark ? '#525252' : '#DDD' }]}
                 onPress={() => {
                   if (Platform.OS !== 'web') {
                     Keyboard.dismiss();
@@ -309,7 +309,7 @@ const CreateEventPage = () => {
             <View style={styles.inputGroup}>
               <Text style={[styles.label, { color: isDark ? '#a1a1a1' : '#555' }]}>End</Text>
               <Pressable
-                style={[styles.input, { backgroundColor: isDark ? '#262626' : '#FAFAFA', borderColor: isDark ? '#525252' : '#DDD' }]}
+                style={[styles.input, { backgroundColor: isDark ? '#2e3332' : '#FAFAFA', borderColor: isDark ? '#525252' : '#DDD' }]}
                 onPress={() => {
                   if (Platform.OS !== 'web') {
                     Keyboard.dismiss();
@@ -332,7 +332,7 @@ const CreateEventPage = () => {
             <View style={styles.inputGroup}>
               <Text style={[styles.label, { color: isDark ? '#a1a1a1' : '#555' }]}>Event Location</Text>
               <Pressable
-              style={[styles.input, { backgroundColor: isDark ? '#262626' : '#FAFAFA', borderColor: isDark ? '#525252' : '#DDD' }]}
+              style={[styles.input, { backgroundColor: isDark ? '#2e3332' : '#FAFAFA', borderColor: isDark ? '#525252' : '#DDD' }]}
               onPress={() => {
                 if (Platform.OS !== 'web') {
                   Keyboard.dismiss();
@@ -352,7 +352,7 @@ const CreateEventPage = () => {
             <View style={styles.inputGroup}>
               <Text style={[styles.label, { color: isDark ? '#a1a1a1' : '#555' }]}>Description</Text>
               <TextInput
-                style={[styles.input, styles.textArea, { backgroundColor: isDark ? '#262626' : '#FAFAFA', borderColor: isDark ? '#525252' : '#DDD', color: isDark ? '#e5e5e5' : '#333' }]}
+                style={[styles.input, styles.textArea, { backgroundColor: isDark ? '#2e3332' : '#FAFAFA', borderColor: isDark ? '#525252' : '#DDD', color: isDark ? '#e5e5e5' : '#333' }]}
                 value={eventDescription}
                 onChangeText={setEventDescription}
                 placeholder="Tell us more..."

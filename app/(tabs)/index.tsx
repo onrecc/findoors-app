@@ -12,7 +12,7 @@ import * as turf from '@turf/turf';
 import * as Location from 'expo-location';
 import { useFocusEffect, useGlobalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, Image, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Easing, Image, Modal, Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
 
 interface POI {
   id: string;
@@ -61,6 +61,7 @@ const SFHomeScreen = () => {
     const expiry = new Date(share.start).getTime() + share.durationh * 3600 * 1000;
     return expiry > Date.now();
   });
+  const isDark = useColorScheme() === 'dark';
 
   useFocusEffect(
     React.useCallback(() => {
@@ -385,7 +386,7 @@ const SFHomeScreen = () => {
     <View style={styles.container}>
       <MapView
         style={{ flex: 1, width: '100%' }}
-        styleURL="https://api.maptiler.com/maps/basic-v2/style.json?key=XSJRg4GXeLgDiZ98hfVp"
+        styleURL={ isDark ? 'https://api.maptiler.com/maps/basic-v2-dark/style.json?key=XSJRg4GXeLgDiZ98hfVp' : "https://api.maptiler.com/maps/basic-v2/style.json?key=XSJRg4GXeLgDiZ98hfVp"}
         onDidFinishLoadingMap={() => setMapReady(true)}
         onPress={e => {
           if (isSelectingLocation && e.geometry?.coordinates) {
@@ -423,7 +424,7 @@ const SFHomeScreen = () => {
                     ? require('@/assets/event64.png')
                     : undefined
                 }
-                style={{ width: 30, height: 30 }}
+                style={{ width: 30, height: 30, borderRadius: 15 }}
               />
             </Pressable>
           </MarkerView>
@@ -500,18 +501,18 @@ const SFHomeScreen = () => {
         <Pressable
           style={({ pressed }) => [
             styles.mapButton,
-            { opacity: pressed ? 0.6 : 1 },
+            { opacity: pressed ? 0.6 : 1, backgroundColor: isDark ? '#181C1B' : '#fff' },
           ]}
           onPress={centerOnUser}
         >
-          <MaterialIcons name="my-location" size={28} color="#404040" />
+          <MaterialIcons name="my-location" size={28} color={ isDark ? '#e1e6e4' : '#404040' } />
         </Pressable>
 
         {shareRowId ? (
           <Pressable
             style={({ pressed }) => [
               styles.mapButton,
-              { opacity: pressed ? 0.6 : 1 },
+              { opacity: pressed ? 0.6 : 1, backgroundColor: isDark ? '#181C1B' : '#fff' },
             ]}
             onPress={() => setShowStopModal(true)}
           >
@@ -523,7 +524,7 @@ const SFHomeScreen = () => {
           <Pressable
           style={({ pressed }) => [
             styles.mapButton,
-            { opacity: pressed ? 0.6 : 1 },
+            { opacity: pressed ? 0.6 : 1, backgroundColor: isDark ? '#181C1B' : '#fff'},
           ]}
           onPress={() => {
             setIsSelectingLocation(true);
@@ -531,7 +532,7 @@ const SFHomeScreen = () => {
             shareModalRef.current?.present();
           }}
         >
-          <MaterialIcons name="share-location" size={28} color="#404040" />
+          <MaterialIcons name="share-location" size={28} color={ isDark ? '#e1e6e4' : '#404040' } />
         </Pressable>
         )}
       </View>
@@ -594,13 +595,13 @@ const styles = StyleSheet.create({
   mapButtonContainer: {
     position: 'absolute',
     top: 50,
-    right: 20,
+    right: 15,
     flexDirection: 'column',
     alignItems: 'center',
     gap: 8,
   },
   mapButton: {
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     padding: 12,
     borderRadius: 16,
   },

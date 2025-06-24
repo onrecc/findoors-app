@@ -11,6 +11,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  useColorScheme,
 } from 'react-native';
 
 const pastelGreen = '#E6F5DE';
@@ -71,47 +72,51 @@ export default function UserInfoScreen() {
     }
   };
 
+  const isDark = useColorScheme() === 'dark';
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      style={styles.container}
+      style={[styles.container, isDark && { backgroundColor: '#181C1B' }]}
     >
-      <Text style={styles.title}>Let’s get to know you ✨</Text>
+      <Text style={[styles.title, isDark && { color: '#E6F5DE' }]}>
+        Let’s get to know you ✨
+      </Text>
 
       <View style={styles.inputGroup}>
-        <Text style={styles.label}>Your Name</Text>
+        <Text style={[styles.label, isDark && { color: '#9eaaa5' }]}>Your Name</Text>
         <TextInput
           autoCapitalize="words"
           maxLength={35}
           placeholder="e.g. Rene"
           placeholderTextColor={'#999'}
-          style={styles.input}
+          style={[styles.input, isDark && { backgroundColor: '#2C2F2E', color: '#E6F5DE' }]}
           value={name}
           onChangeText={setName}
         />
       </View>
 
       <View style={styles.inputGroup}>
-        <Text style={styles.label}>Country (or state) <Text style={styles.optional}>(optional)</Text></Text>
+        <Text style={[styles.label, isDark && { color: '#9eaaa5' }]}>Country (or state) <Text style={styles.optional}>(optional)</Text></Text>
         <TextInput
           autoCapitalize="words"
           maxLength={24}
           placeholder="e.g. Finland or California, USA"
           placeholderTextColor={'#999'}
-          style={styles.input}
+          style={[styles.input, isDark && { backgroundColor: '#2C2F2E', color: '#E6F5DE' }]}
           value={country}
           onChangeText={setCountry}
         />
       </View>
 
       <View style={styles.inputGroup}>
-        <Text style={styles.label}>Age <Text style={styles.optional}>(optional)</Text></Text> 
+        <Text style={[styles.label, isDark && { color: '#9eaaa5' }]}>Age <Text style={styles.optional}>(optional)</Text></Text> 
         <TextInput
           maxLength={2}
           placeholder="e.g. 17"
           keyboardType="numeric"
           placeholderTextColor={'#999'}
-          style={styles.input}
+          style={[styles.input, isDark && { backgroundColor: '#2C2F2E', color: '#E6F5DE' }]}
           value={age}
           onChangeText={setAge}
         />
@@ -122,7 +127,7 @@ export default function UserInfoScreen() {
           style={styles.checkboxContainer}
           onPress={() => setEulaAccepted(!eulaAccepted)}
         >
-          <View style={[styles.checkbox, eulaAccepted && styles.checkboxChecked]}>
+          <View style={[styles.checkbox, isDark && { backgroundColor: '#181c1b', borderColor: '#3e4744' }, eulaAccepted && styles.checkboxChecked]}>
             {eulaAccepted && <Text style={styles.checkmark}>✓</Text>}
           </View>
           <Text style={styles.checkboxLabel}>
@@ -140,10 +145,10 @@ export default function UserInfoScreen() {
       <TouchableOpacity 
         style={[
           styles.button, 
-          !eulaAccepted && styles.buttonDisabled
+          (!eulaAccepted || !name) && styles.buttonDisabled
         ]} 
         onPress={handleSubmit}
-        disabled={!eulaAccepted}
+        disabled={!eulaAccepted || !name}
       >
         <Text style={[
           styles.buttonText,

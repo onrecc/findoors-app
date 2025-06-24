@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  useColorScheme,
 } from 'react-native';
 
 const slides = [
@@ -33,6 +34,7 @@ export default function GuideScreen() {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollRef = useRef<ScrollView>(null);
+  const isDark = useColorScheme() === 'dark';
 
   const onScroll = (e: any) => {
     const index = Math.round(e.nativeEvent.contentOffset.x / width);
@@ -40,7 +42,7 @@ export default function GuideScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isDark && { backgroundColor: '#181c1b' }]}> 
       <ScrollView
         ref={scrollRef}
         horizontal
@@ -52,33 +54,30 @@ export default function GuideScreen() {
         {slides.map((slide, index) => (
           <View key={index} style={styles.slide}>
             <Text style={styles.icon}>{slide.icon}</Text>
-            <Text style={styles.title}>{slide.title}</Text>
-            <Text style={styles.text}>{slide.text}</Text>
+            <Text style={[styles.title, isDark && { color: '#E6F5DE' }]}>{slide.title}</Text>
+            <Text style={[styles.text, isDark && { color: '#B4CBA5' }]}>{slide.text}</Text>
           </View>
         ))}
       </ScrollView>
-
-      {/* Page Dots */}
       <View style={styles.dots}>
         {slides.map((_, i) => (
           <View
             key={i}
             style={[
               styles.dot,
-              currentIndex === i && styles.dotActive,
+              currentIndex === i && (isDark ? styles.dotActiveDark : styles.dotActive),
             ]}
           />
         ))}
       </View>
-
-      {/* Only show button on last page */}
       {currentIndex === slides.length - 1 && (
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button, isDark && { backgroundColor: '#F4A261' }]}
           onPress={() => {
             router.dismissAll();
             router.replace('/');
           }}
+          activeOpacity={0.87}
         >
           <Text style={styles.buttonText}>Let’s Start!</Text>
         </TouchableOpacity>
@@ -150,6 +149,10 @@ const styles = StyleSheet.create({
   },
   dotActive: {
     backgroundColor: '#5C7C6E',
+    width: 14,
+  },
+  dotActiveDark: {
+    backgroundColor: '#E6F5DE',
     width: 14,
   },
 });

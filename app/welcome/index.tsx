@@ -3,9 +3,10 @@ import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import MapboxGL from '@rnmapbox/maps';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View, useColorScheme } from 'react-native';
 
-const MAP_STYLE = 'https://api.maptiler.com/maps/019717fd-a8fc-78fa-afaf-c660bbb6b406/style.json?key=XSJRg4GXeLgDiZ98hfVp';
+const isDark = useColorScheme() === 'dark';
+const MAP_STYLE = isDark ? 'https://api.maptiler.com/maps/basic-v2-dark/style.json?key=XSJRg4GXeLgDiZ98hfVp' : 'https://api.maptiler.com/maps/019717fd-a8fc-78fa-afaf-c660bbb6b406/style.json?key=XSJRg4GXeLgDiZ98hfVp';
 const START_COORD: [number, number] = [-122.401297, 37.773972];
 const houses = [
   { id: 1, lat: 37.7626, lon: -122.4172 },
@@ -20,6 +21,8 @@ export default function WelcomeScreen() {
   const [email, setEmail] = useState('');
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [otp, setOtp] = useState('');
+
+  const isDark = useColorScheme() === 'dark';
 
   useEffect(() => {
     let theta = 0;
@@ -100,9 +103,9 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDark ? '#181C1B' : '#fff' }]}>
       <MapboxGL.MapView
-        style={[StyleSheet.absoluteFill, styles.mapFaint]}
+        style={[StyleSheet.absoluteFill, styles.mapFaint, { opacity: isDark ? 0.1 : 0.3 }]}
         styleURL={MAP_STYLE}
         logoEnabled={false}
         attributionEnabled={false}
@@ -124,12 +127,12 @@ export default function WelcomeScreen() {
       </MapboxGL.MapView>
 
       <View style={styles.overlay}>
-        <Text style={styles.title}>Welcome to OtaMapSF</Text>
+        <Text style={[styles.title, { color: isDark ? '#e1e6e4' : '#5C7C6E'}]}>Welcome to OtaMapSF</Text>
         <Text style={styles.subtitle}>Your Bay Area adventure starts now</Text>
         <Text style={styles.leaf}>🏠</Text>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => bottomSheetRef.current?.snapToIndex(0)}>
+      <TouchableOpacity style={[styles.button, { backgroundColor: isDark ? '#ff8904' : '#F4A261' }]} onPress={() => bottomSheetRef.current?.snapToIndex(0)}>
         <Text style={styles.buttonText}>Get Started!</Text>
       </TouchableOpacity>
 
@@ -138,16 +141,18 @@ export default function WelcomeScreen() {
         snapPoints={['92%']}
         enablePanDownToClose
         ref={bottomSheetRef}
-        backgroundStyle={styles.sheetBackground}
+        backgroundStyle={[styles.sheetBackground, { backgroundColor: isDark ? '#1E2624' : '#F0F8E8', borderColor: isDark ? '#3A4B48' : '#B4CBA5' }]}
       >
         <BottomSheetScrollView contentContainerStyle={styles.sheetView} keyboardShouldPersistTaps="handled">
           <Text style={styles.emoji}>🏠</Text>
-          <Text style={styles.sheetText}>Login to OtaMapSF</Text>
+          <Text style={[styles.sheetText, { color: isDark ? '#E1EDD6' : '#5C7C6E', textShadowColor: isDark ? '#3A4B48' : '#E1EDD6' }]}>
+            Login to OtaMapSF
+          </Text>
 
           <TextInput
-            style={styles.input}
+            style={[styles.input, { backgroundColor: isDark ? '#2A3431' : '#FAFDF7', color: isDark ? '#E1EDD6' : '#546C5E', borderColor: isDark ? '#3A4B48' : '#B4CBA5' }]}
             placeholder="Your email address"
-            placeholderTextColor="#B4CBA5"
+            placeholderTextColor={ isDark ? '#B4CBA5' : '#B4CBA5' }
             keyboardType="email-address"
             autoCapitalize="none"
             autoCorrect={false}
@@ -155,15 +160,20 @@ export default function WelcomeScreen() {
             onChangeText={setEmail}
           />
 
-          <TouchableOpacity style={styles.sheetButton} onPress={handleEmailLogin}>
-            <Text style={styles.sheetButtonText}>Send OTP Code</Text>
+          <TouchableOpacity
+            style={[styles.sheetButton, { backgroundColor: isDark ? '#ff8904' : '#F4A261', borderColor: isDark ? '#3A4B48' : '#82A57A' }]}
+            onPress={handleEmailLogin}
+          >
+            <Text style={[styles.sheetButtonText, { color: isDark ? '#E1EDD6' : '#FFF', fontWeight: '700' }]}>
+              Send OTP Code
+            </Text>
           </TouchableOpacity>
 
           {showOtpInput && (
             <View style={styles.otpSection}>
               <Text style={styles.sheetTextSm}>Enter the code from your email:</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: isDark ? '#2A3431' : '#FAFDF7', color: isDark ? '#E1EDD6' : '#546C5E', borderColor: isDark ? '#3A4B48' : '#B4CBA5' }]}
                 placeholder="One-Time Password"
                 placeholderTextColor="#B4CBA5"
                 keyboardType="number-pad"
@@ -177,8 +187,8 @@ export default function WelcomeScreen() {
                   Keyboard.dismiss();
                 }}
               />
-              <TouchableOpacity style={styles.sheetButton} onPress={handleOtpLogin}>
-                <Text style={styles.sheetButtonText}>Log in with Code</Text>
+              <TouchableOpacity style={[styles.sheetButton, { backgroundColor: isDark ? '#ff8904' : '#F4A261', borderColor: isDark ? '#3A4B48' : '#82A57A' }]} onPress={handleOtpLogin}>
+                <Text style={[styles.sheetButtonText, { color: isDark ? '#E1EDD6' : '#FFF', fontWeight: '700' }]}>Log in with Code</Text>
               </TouchableOpacity>
               <Text style={styles.otpHint}>(Check your spam folder if you don't see it.)</Text>
             </View>
@@ -209,7 +219,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
   },
-  title: { fontSize: 36, fontWeight: '900', color: '#5C7C6E', textAlign: 'center', marginBottom: 8 },
+  title: { fontSize: 36, fontWeight: '900', color: '#5C7C6E', textAlign: 'center', marginBottom: 16 },
   subtitle: { fontSize: 18, color: '#7A8D7B', textAlign: 'center', marginBottom: 30 },
   leaf: { fontSize: 64, marginVertical: 20 },
   button: {

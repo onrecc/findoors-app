@@ -19,6 +19,7 @@ import {
   StyleSheet,
   Text,
   View,
+  useColorScheme,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
@@ -213,17 +214,19 @@ const POIModal = forwardRef<POIModalMethods, { initialSnap?: 'max' | 'mid' | 'mi
 
     if (!selectedPoiData?.id) return null;
 
+    const isDark = useColorScheme() === 'dark';
+
     return (
       <BottomSheetModal
         ref={sheetRef}
         index={initialIndex}
         snapPoints={snapPoints}
         enablePanDownToClose
-        backgroundStyle={styles.background}
-        handleIndicatorStyle={styles.handle}
+        backgroundStyle={[styles.background, { backgroundColor: isDark ? '#181C1B' : '#fff' }]}
+      handleIndicatorStyle={[styles.handle, { backgroundColor: isDark ? '#343b39' : '#aaa' }]}
       >
         <BottomSheetView style={styles.content}>
-          <Text style={styles.title}>{selectedPoiData.title}</Text>
+          <Text style={[styles.title, { color: isDark ? '#f6f7f7' : '' }]}>{selectedPoiData.title}</Text>
           <Text style={styles.type}>
             {selectedPoiData.type === 'event' ? '🎟️ Event' :
             selectedPoiData.type === 'food' ? '🍽️ Food Spot' :
@@ -243,7 +246,7 @@ const POIModal = forwardRef<POIModalMethods, { initialSnap?: 'max' | 'mid' | 'mi
             </Pressable>
           ) : (
             <Pressable style={styles.wantToVisitContainer} onPress={handleAddToVisit}>
-              <MaterialIcons name="bookmark-border" size={24} color="#F4A261" />
+              <MaterialIcons name="bookmark-border" size={24} color="#ff8904" />
               <Text style={styles.wantToVisitText}>Want to visit</Text>
             </Pressable>
           )}
@@ -272,8 +275,8 @@ const POIModal = forwardRef<POIModalMethods, { initialSnap?: 'max' | 'mid' | 'mi
             <Text style={styles.description}>{selectedPoiData.description}</Text>
           )}
 
-          <BottomSheetScrollView style={styles.chatContainer}>
-            <Text style={styles.photos}>Photos and Comments</Text>
+          <BottomSheetScrollView style={[styles.chatContainer, { backgroundColor: isDark ? '#2e3332' : '#f9f9f9', borderColor: isDark ? '#44444470' : '#ccc' }]}>
+            <Text style={[styles.photos, { color: isDark ? '#e1e6e4' : '#262626' }]}>Photos and Comments</Text>
 
             {messages.length > 0 ? (
               messages.map(msg => (
@@ -290,11 +293,13 @@ const POIModal = forwardRef<POIModalMethods, { initialSnap?: 'max' | 'mid' | 'mi
               placeholder="Write a comment..."
               style={{ 
                 height: 40, 
-                borderColor: '#ccc', 
+                borderColor: isDark ? '#3e4744' : '#ccc', 
                 borderWidth: 1, 
                 borderRadius: 8, 
                 paddingHorizontal: 10,
                 marginBottom: 10,
+                backgroundColor: isDark ? '#181c1b70' : '#fff',
+                color: isDark ? '#f5f5f5' : '#333',
               }}
               value={comment}
               onChangeText={(text) => {
@@ -311,7 +316,7 @@ const POIModal = forwardRef<POIModalMethods, { initialSnap?: 'max' | 'mid' | 'mi
                 setComment('');
               }}
               style={{ 
-                backgroundColor: comment.trim() ? '#F4A261' : '#ccc', 
+                backgroundColor: comment.trim() ? isDark ? '#ff6900' : '#ff8904' : isDark ? '#c3ccc8' : '#ccc', 
                 padding: 10, 
                 borderRadius: 8, 
                 alignItems: 'center',
@@ -394,7 +399,7 @@ const styles = StyleSheet.create({
   directionsButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F4A261',
+    backgroundColor: '#ff8904',
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -426,7 +431,7 @@ const styles = StyleSheet.create({
   visitedContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F4A261',
+    backgroundColor: '#ff8904',
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -437,7 +442,7 @@ const styles = StyleSheet.create({
   wantToVisitText: {
     marginLeft: 8,
     fontSize: 16,
-    color: '#F4A261',
+    color: '#ff8904',
     fontWeight: 'bold',
   },
   visitedText: {
@@ -457,6 +462,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     flex: 1,
     borderWidth: 2,
-    borderColor: '#F4A261',
+    borderColor: '#ff8904',
   },
 })

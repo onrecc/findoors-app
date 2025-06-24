@@ -128,6 +128,9 @@ const PassportScreen = () => {
         >
           <Text style={style.logout}>Log Out</Text>
         </TouchableOpacity>
+
+        // debug (buttons to go thru welcome flow)
+
       )}
     </SafeAreaView>
   );
@@ -280,7 +283,7 @@ const darkStyles = StyleSheet.create({
     width: '90%',
     marginBottom: 30,
     elevation: 3,
-    backgroundColor: '#232826',
+    // backgroundColor: '#232826',
   },
   pfpBlock: {
     flexDirection: 'row',

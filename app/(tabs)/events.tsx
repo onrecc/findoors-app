@@ -68,14 +68,15 @@ const EventsScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: isDark ? '#121212' : '#f0f0f0' }}>
+    <View style={{ flex: 1, backgroundColor: isDark ? '#181C1B' : '#f0f0f0' }}>
       <Stack.Screen
         options={{
           title: 'Events & Shares',
           headerShown: true,
-          headerStyle: { backgroundColor: isDark ? '#121212' : '#fff' },
+          headerStyle: { backgroundColor: isDark ? '#181C1B' : '#fff' },
           headerTitleStyle: { fontWeight: 'bold' },
           headerTintColor: isDark ? '#fff' : '#333',
+          headerShadowVisible: false,
           headerRight: () => (
             <Pressable
               onPress={() => router.push('/events/create')}
@@ -87,7 +88,7 @@ const EventsScreen = () => {
         }}
       />
 
-      <ScrollView contentContainerStyle={[styles.container, {backgroundColor: isDark ? '#121212' : '#f0f0f0'}]} style={{ paddingBottom: 40 }}>
+      <ScrollView contentContainerStyle={[styles.container, {backgroundColor: isDark ? '#181C1B' : '#f0f0f0'}]} style={{ paddingBottom: 40 }}>
         {/* Shares Section */}
         {shares.filter(share => new Date(share.end + 'Z') > new Date()).length > 0 && (
           <Text style={[styles.header, {color: isDark ? '#e5e5e5' : '#262626'}]}>Neighbors Shares</Text>
@@ -97,7 +98,7 @@ const EventsScreen = () => {
           .map(share => (
             <Pressable
               key={share.id}
-              style={[styles.card, {backgroundColor: isDark ? '#262626' : '#fff'}]}
+              style={[styles.card, {backgroundColor: isDark ? '#2e3332' : '#fff'}]}
               onPress={() => goToMapByCoords(share.lat, share.lon)}
             >
               <Text style={[styles.name, { color: isDark ? '#e5e5e5' : '#262626' }]}>{share.name}</Text>
@@ -136,7 +137,7 @@ const EventsScreen = () => {
             .map(event => (
             <Pressable
               key={event.id}
-              style={[styles.card, {backgroundColor: isDark ? '#262626' : '#fff'}]}
+              style={[styles.card, {backgroundColor: isDark ? '#2e3332' : '#fff'}]}
               onPress={() => {
                 goToMapById(event.poi_id);
               }}
@@ -174,7 +175,7 @@ const EventsScreen = () => {
 export default EventsScreen;
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
+  container: { padding: 20, paddingBottom: 90 },
   header: { fontSize: 22, fontWeight: '500', marginBottom: 20, color: '#333' },
   card: { backgroundColor: '#fff', padding: 15, borderRadius: 10, marginBottom: 15, elevation: 3 },
   name: { fontSize: 20, fontWeight: 'bold', marginBottom: 5, color: '#222' },

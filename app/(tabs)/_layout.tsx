@@ -22,12 +22,12 @@ export default function TabLayout() {
           ios: {
             // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
-            backgroundColor: isDark ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.8)',
+            backgroundColor: isDark ? '#181C1B' : 'rgba(255, 255, 255, 0.8)',
             borderTopWidth: 0,
             shadowColor: 'transparent'
           },
           default: {
-            backgroundColor: isDark ? '#121212' : '#ffffff',
+            backgroundColor: isDark ? '#181C1B' : '#ffffff',
             borderTopWidth: 0,
             elevation: 0,
             shadowColor: 'transparent',

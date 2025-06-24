@@ -92,14 +92,15 @@ const NeighborsScreen = () => {
   }
 
   return (
-    <ScrollView style={[styles.container, {backgroundColor: isDark ? '#121212' : '#f0f0f0',}]}>
+    <ScrollView style={[styles.container, {backgroundColor: isDark ? '#181C1B' : '#f0f0f0',}]}>
       <Stack.Screen
         name="neighbors"
         options={{
           title: `Neighbors`,
           headerShown: true,
-          headerStyle: { backgroundColor: isDark ? '#121212' : '#ffffff' },
+          headerStyle: { backgroundColor: isDark ? '#181C1B' : '#ffffff' },
           headerTitleStyle: { color: isDark ? 'white' : 'black' },
+          headerShadowVisible: false,
           headerRight: () => (
             <Pressable
               onPress={() => {router.push('/friends/add');}}
@@ -117,9 +118,9 @@ const NeighborsScreen = () => {
       {friendsData.length > 0 ? (
         <View style={styles.friendsList}>
           {friendsData.map((friend) => (
-            <View key={friend.id} style={[styles.friendCard, {backgroundColor:isDark ? '#262626' : 'white',}]}>
+            <View key={friend.id} style={[styles.friendCard, {backgroundColor:isDark ? '#2e3332' : 'white',}]}>
               <Text style={[styles.name, {color: isDark ? '#fff' : '#333',}]}>{friend.name}</Text>
-              <Text style={styles.details}>{friend.age} years • from {friend.country}</Text>
+              <Text style={[styles.details, { color: isDark ? '#798883' : '' }]}>{friend.age} years • from {friend.country}</Text>
             </View>
           ))}
         </View>

@@ -11,6 +11,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  useColorScheme,
 } from 'react-native';
 
 const houses = [
@@ -63,8 +64,10 @@ export default function WhereScreen() {
     }
   };
 
+  const isDark = useColorScheme() === 'dark';
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isDark && { backgroundColor: '#181c1b' }, { paddingTop: Platform.OS === 'ios' ? 48 : 26 }]}>
       <ScrollView
         style={{ width: '100%' }}
         contentContainerStyle={{
@@ -73,7 +76,7 @@ export default function WhereScreen() {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>Pick your House!</Text>
+        <Text style={[styles.title, isDark && { color: '#E6F5DE' }]}>Pick your House!</Text>
         <Text style={styles.disclaimer}>
           (Just for fun! Doesn’t affect your real house in Neighborhood.)
         </Text>
@@ -95,35 +98,43 @@ export default function WhereScreen() {
                 alignItems: 'center',
               }}
             >
-              <TouchableOpacity
-                style={[
-                  styles.houseCard,
-                  {
-                    backgroundColor: house.color,
-                    borderColor: selected === house.name ? accent : 'transparent',
-                    transform:
-                      selected === house.name
-                        ? [{ scale: 1.06 }]
-                        : [{ scale: 1 }],
-                    shadowOpacity: selected === house.name ? 0.19 : 0.11,
-                  },
-                ]}
-                onPress={() => setSelected(house.name)}
-                activeOpacity={0.88}
-              >
-                <Image
-                  source={house.image}
-                  style={styles.houseImage}
-                  resizeMode="cover"
-                />
-                <Text style={styles.houseName}>
-                  {house.name} {house.emoji}
-                </Text>
-                <Text style={styles.houseLocation}>{house.location}</Text>
-                {selected === house.name && (
-                  <Text style={styles.selectedText}>✓ Selected</Text>
-                )}
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.houseCard,
+                    {
+                      backgroundColor: isDark
+                        ? `${house.color}25`
+                        : house.color,
+                      borderColor: isDark
+                        ? (selected === house.name ? accent : `${house.color}25`)
+                        : (selected === house.name ? accent : house.color),
+                      transform:
+                        selected === house.name
+                          ? [{ scale: 1.06 }]
+                          : [{ scale: 1 }],
+                      shadowOpacity: selected === house.name ? 0.19 : 0.11,
+                    },
+                  ]}
+                  onPress={() => setSelected(house.name)}
+                  activeOpacity={0.88}
+                >
+                  <Image
+                    source={house.image}
+                    style={[styles.houseImage, {
+                      borderColor: isDark
+                        ? (selected === house.name ? `${accent}50` : `${house.color}25`)
+                        : (selected === house.name ? `${accent}50` : `${house.color}25`),
+                    }]}
+                    resizeMode="cover"
+                  />
+                  <Text style={[styles.houseName, isDark && { color: '#E6F5DE' }]}>
+                    {house.name} {house.emoji}
+                  </Text>
+                  <Text style={styles.houseLocation}>{house.location}</Text>
+                  {selected === house.name && (
+                    <Text style={styles.selectedText}>✓ Selected</Text>
+                  )}
+                </TouchableOpacity>
             </Animated.View>
           ))}
         </View>
@@ -164,7 +175,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 29,
-    fontWeight: '900',
+    fontWeight: '800',
     color: mainText,
     textAlign: 'center',
     letterSpacing: 1.2,

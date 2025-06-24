@@ -1,11 +1,13 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, useColorScheme } from 'react-native';
 
 const Loading = () => {
+  const isDark = useColorScheme() === 'dark';
+
   return (
-    <View style={styles.centered}>
-      <ActivityIndicator size="large" color="#007AFF" />
-      <Text style={styles.loadingText}>Loading...</Text>
+    <View style={[styles.centered, { backgroundColor: isDark ? '#181C1B' : '#FFFFFF' }]}>
+      <ActivityIndicator size="large" color={ isDark ? '#c3ccc8' : "#007AFF"} />
+      <Text style={[styles.loadingText, { color: isDark ? '#e1e6e4' : '#171717' }]}>Loading...</Text>
     </View>
   );
 };
