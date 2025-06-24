@@ -8,7 +8,7 @@ msgstr ""
 "Language: sv\n"
 "Project-Id-Version: otamaps-app\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-05-21 11:12\n"
+"PO-Revision-Date: 2025-05-25 17:24\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -56,4 +56,5 @@ msgstr "Visa på kartan"
 
 #: app/(tabs)/index.tsx:150
 msgid "Search for Friends"
-msgstr "Search for Friends"
+msgstr ""
+
