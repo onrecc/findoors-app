@@ -2,7 +2,7 @@
   "expo": {
     "name": "OtaMapSF",  
     "slug": "findoors",
-    "version": "0.3.1",
+    "version": "0.4.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "findoors",
@@ -11,7 +11,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "fi.otamaps.sf",
-      "buildNumber": "112",
+      "buildNumber": "113",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "BackgroundModes": [
@@ -26,7 +26,7 @@
     }, 
     "android": {
       "edgeToEdgeEnabled": true,
-      "versionCode": 23,
+      "versionCode": 24,
       "package": "fi.otamaps.sf",
       "permissions": [
         "ACCESS_FINE_LOCATION",

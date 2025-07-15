@@ -210,8 +210,8 @@ const SFHomeScreen = () => {
       alert('Permission to access location was denied');
       return;
     }
-    const loc = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Highest });
-    cameraRef.current?.moveTo([loc.coords.longitude, loc.coords.latitude], 1000);
+    const loc = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
+    cameraRef.current?.flyTo([loc.coords.longitude, loc.coords.latitude], 1000);
   };
 
   useEffect(() => {
@@ -497,7 +497,7 @@ const SFHomeScreen = () => {
       </MapView>
 
       <View style={styles.mapButtonContainer}>
-        <Pressable
+        {/*<Pressable
           style={({ pressed }) => [
             styles.mapButton,
             { opacity: pressed ? 0.6 : 1 },
@@ -505,7 +505,7 @@ const SFHomeScreen = () => {
           onPress={centerOnUser}
         >
           <MaterialIcons name="my-location" size={28} color="#404040" />
-        </Pressable>
+        </Pressable>*/}
 
         {shareRowId ? (
           <Pressable

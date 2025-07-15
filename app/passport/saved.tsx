@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  useColorScheme,
   View
 } from 'react-native';
 
@@ -100,15 +101,24 @@ function useSavedLocations() {
 
 export default function SavedLocationsScreen() {
   const { pois, loading, error } = useSavedLocations();
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
+  const style = isDark ? darkStyles : styles;
 
   return (
-    <ScrollView style={styles.container}>
-      <Stack.Screen options={{ title: 'Saved Locations' }} />
+    <ScrollView style={style.container}>
+      <Stack.Screen options={{ 
+        title: 'Saved Locations',
+        headerStyle: {
+          backgroundColor: isDark ? '#1a1a1a' : '#fff',
+        },
+        headerTintColor: isDark ? '#fff' : '#000',
+      }} />
 
-      {loading && <ActivityIndicator size="large" color="#888" />}
-      {error && <Text style={styles.error}>{error}</Text>}
+      {loading && <ActivityIndicator size="large" color={isDark ? '#888' : '#000'} />}
+      {error && <Text style={style.error}>{error}</Text>}
       {!loading && !error && pois.length === 0 && (
-        <Text style={styles.empty}>You haven’t saved any places yet.</Text>
+        <Text style={style.empty}>You haven't saved any places yet.</Text>
       )}
 
       {!loading &&
@@ -116,13 +126,13 @@ export default function SavedLocationsScreen() {
         pois.map((poi) => (
           <View
             key={poi.id}
-            style={styles.card}
+            style={style.card}
           >
-            <Text style={styles.title}>{poi.title}</Text>
+            <Text style={style.title}>{poi.title}</Text>
             {poi.image_url && (
               <Image
                 source={{ uri: poi.image_url }}
-                style={styles.image}
+                style={style.image}
               />
             )}
           </View>
@@ -168,5 +178,47 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 8,
     resizeMode: 'cover',
+  },
+});
+
+const darkStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#121212',
+    paddingBottom: 60,
+  },
+  error: {
+    color: '#ff6b6b',
+    textAlign: 'center',
+    marginVertical: 20,
+  },
+  empty: {
+    color: '#888',
+    textAlign: 'center',
+    marginVertical: 20,
+  },
+  card: {
+    backgroundColor: '#1e1e1e',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 8,
+    color: '#fff',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 4,
+    marginTop: 8,
   },
 });

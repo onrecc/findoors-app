@@ -169,39 +169,13 @@ const FeedScreen = () => {
         return;
       }
 
-      console.log('[FeedScreen] Fetching friends for user:', user.id);
-      // Get user's friends
-      const { data: friendRecords, error: friendsError } = await supabase
-        .from('friends')
-        .select('friend_id')
-        .eq('user_id', user.id);
-
-      console.log('[FeedScreen] Friends query result:', { friendRecords, friendsError });
-      if (friendsError) {
-        console.error('[FeedScreen] Friends error:', friendsError);
-        setError(friendsError.message);
-        return;
-      }
-
-      const friendIds = friendRecords?.map(f => f.friend_id) || [];
-      console.log('[FeedScreen] Friend IDs:', friendIds);
-      
-      // Include user's own posts in the feed
-      const allUserIds = [user.id, ...friendIds];
-      console.log('[FeedScreen] All user IDs to fetch posts from:', allUserIds);
-
-      if (allUserIds.length === 0) {
-        console.log('[FeedScreen] No user IDs, setting empty feed');
-        setFeedItems([]);
-        return;
-      }
+      console.log('[FeedScreen] Fetching all check-ins...');
 
       console.log('[FeedScreen] Fetching check-ins...');
-      // Get check-ins from friends and self
+      // Get all check-ins
       const { data: checkIns, error: checkInsError } = await supabase
         .from('check_ins')
         .select('*')
-        .in('poster_id', allUserIds)
         .order('created_at', { ascending: false })
         .limit(50);
 

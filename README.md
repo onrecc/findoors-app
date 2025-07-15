@@ -1,6 +1,12 @@
-# findoors
+# OtaMapSF
 
-A React Native / Expo-powered indoor/outdoor campus/office navigation app using Mapbox & custom-built local BLE Beacons.
+Your interactive travel companion for discovering San Francisco's key spots while meeting others on the same journey. Whether you're here for tech, creativity, or community—we help you navigate it all, effortlessly.
+
+> Made by Students, Shared with the World
+> 
+> This isn't a polished corporate product—it's a tool built by students who wanted to solve a real-world challenge. It's open source, and you're welcome to take it further.
+
+## 🚀 Key Features
 
 ## Table of Contents
 
@@ -9,16 +15,21 @@ A React Native / Expo-powered indoor/outdoor campus/office navigation app using 
 3. [Prerequisites](#prerequisites)  
 4. [Getting Started](#getting-started)  
 
-## Features
+### 🌟 Explore San Francisco
+- 🗺️ View a dynamic map of curated points of interest
+- 🏙️ Discover cultural landmarks, tech hubs, and hidden gems
+- 🎯 Find the best spots for networking and socializing
 
-- 📍 Interactive maps with [`@rnmapbox/maps`](package.json)  
-- 🚀 File-based routing with [Expo Router](app/_layout.tsx)  
-- 🌐 Localization with Lingui  
-- 🎨 Custom UI components in [components](components/)  
+### 👥 Connect & Share
+- 🤝 Meet fellow travelers and locals with similar interests
+- 📸 Document and share your adventures
+- 🎉 Discover and join local events and meetups
 
-## TODO Features
-
-- 🔒 Authentication & real-time data via [`@supabase/supabase-js`](package.json) ([`lib/supabase.ts`](lib/supabase.ts))  
+### 🛠 Technical Features
+- 📱 Cross-platform mobile app (iOS & Android)
+- 🗺️ Interactive maps with real-time location
+- 🔄 Seamless navigation experience
+- 🔒 Secure user authentication
 
 ## Tech Stack
 
@@ -41,34 +52,45 @@ For custom build follow [eas local build guide](https://docs.expo.dev/build-refe
   npm install -g expo-cli eas-cli
   ```
 
-## Getting Started
+## 🚀 Getting Started
 
-1. Clone the repo
+### For Users
+1. Download the app from [App Store](https://apps.apple.com) or [Google Play](https://play.google.com)
+2. Create your account
+3. Start exploring San Francisco!
 
+### For Developers
+1. Clone the repository
    ```bash
-   git clone https://github.com/your-org/findoors.git
+   git clone https://github.com/onrecc/findoors.git
    cd findoors/app
    ```
 
 2. Install dependencies
-
    ```bash
    yarn install
    # or
    npm install
    ```
 
-3. Copy & configure your environment
-
+3. Set up environment
    ```bash
    cp .env.example .env
-   # Make sure to edit the .env file to include your URL and ANON_KEY
+   # Configure your environment variables
    ```
 
-4. Run the app
-
+4. Start the development server
    ```bash
    yarn expo start
    # or
    npx expo start
    ```
+
+## 📱 Download
+
+Get the latest version of OtaMapSF:
+- [GitHub Releases](https://github.com/onrecc/findoors-app/releases)
+
+## 🤝 Contributing
+
+We welcome contributions! Feel free to submit issues and pull requests.
