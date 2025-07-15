@@ -2,10 +2,6 @@
 
 Your interactive travel companion for discovering San Francisco's key spots while meeting others on the same journey. Whether you're here for tech, creativity, or community—we help you navigate it all, effortlessly.
 
-> Made by Students, Shared with the World
-> 
-> This isn't a polished corporate product—it's a tool built by students who wanted to solve a real-world challenge. It's open source, and you're welcome to take it further.
-
 ## 🚀 Key Features
 
 ## Table of Contents
